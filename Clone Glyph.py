@@ -36,5 +36,3 @@ for i in glyphslist:
             cloneGlyph(glyph,sname)
 
 font.update()
-
-   
