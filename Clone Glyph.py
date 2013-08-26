@@ -5,6 +5,7 @@
 
 from robofab.world import CurrentFont, CurrentGlyph
 from mojo.UI import *
+from time import asctime
 
 font = CurrentFont()
 glyphslist = font.selection
@@ -18,6 +19,8 @@ def cloneGlyph(glyph,name=''):
         newName = oldname+'.'+'%03d' % i
         if newName not in font.keys():
             font.insertGlyph(glyph,newName)
+            font.update()
+            font[newName].note = asctime()
             break
 
 for i in glyphslist:
