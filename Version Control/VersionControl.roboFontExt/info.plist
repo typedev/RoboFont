@@ -33,5 +33,10 @@
 	<real>1377179780.1093521</real>
 	<key>version</key>
 	<string>1.0</string>
+	<key>repository</key>
+    <string>typedev/RoboFont</string>
+    <key>extensionPath</key>
+    <string>Version Control/VersionControl.roboFontExt</string>
+
 </dict>
 </plist>
