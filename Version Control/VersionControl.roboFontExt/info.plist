@@ -34,9 +34,15 @@
 	<key>version</key>
 	<string>1.0</string>
 	<key>repository</key>
+<<<<<<< HEAD
 	<string>typedev/RoboFont</string>
 	<key>extensionPath</key>
 	<string>Version Control/VersionControl.roboFontExt</string>
+=======
+    	<string>typedev/RoboFont</string>
+    	<key>extensionPath</key>
+    	<string>Version Control/VersionControl.roboFontExt</string>
+>>>>>>> 25e36f0846150788c3bf9b5ecd377ac07f2b6fa8
 
 </dict>
 </plist>
