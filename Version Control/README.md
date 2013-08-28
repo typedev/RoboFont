@@ -1,6 +1,6 @@
 # Version Control RoboFont Extension
 
-Version Control allows saving the current glyph as version and managing these versions.For example, if you draw a mark and doubt in correctness of current position you can save it as the version and continue drawing. Then, if necessary, return to any previous versions, manage them, compare with current or view all glyph revisions in SpaceCenter, replace the drawing of current glyph with version\`s drawing or delete it.
+Version Control allows saving the current glyph as version and managing these versions.For example, if you draw a glyph and doubt in correctness of current position you can save it as the version and continue drawing. Then, if necessary, return to any previous versions, manage them, compare with current or view all glyph revisions in SpaceCenter, replace the drawing of current glyph with version\`s drawing or delete it.
 
 > The number of versions for each glyph is to 999. Versions of the glyphs are stored in the glyph general table with names GlyphName.ver.XXX  - where XXX is the version number from 001 to 999. If necessary, they can be manually removed, as usual glyphs. 
 
