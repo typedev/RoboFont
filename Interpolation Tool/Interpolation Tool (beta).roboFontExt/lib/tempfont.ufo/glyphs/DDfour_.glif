@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="DDfour" format="1">
+  <advance width="600"/>
+  <outline>
+    <contour>
+      <point x="580" y="284" type="line"/>
+      <point x="445" y="284" type="line"/>
+      <point x="445" y="700" type="line"/>
+      <point x="379" y="700" type="line"/>
+      <point x="44" y="276" type="line"/>
+      <point x="44" y="218" type="line"/>
+      <point x="367" y="218" type="line"/>
+      <point x="367" y="0" type="line"/>
+      <point x="445" y="0" type="line"/>
+      <point x="445" y="218" type="line"/>
+      <point x="580" y="218" type="line"/>
+    </contour>
+    <contour>
+      <point x="367" y="284" type="line"/>
+      <point x="136" y="284" type="line"/>
+      <point x="367" y="575" type="line"/>
+    </contour>
+  </outline>
+  <lib>
+    <dict>
+      <key>com.typemytype.robofont.layerData</key>
+      <dict>
+      </dict>
+    </dict>
+  </lib>
+</glyph>

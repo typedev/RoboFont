@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>DDbracketleft</key>
+	<string>DDbracketleft_.glif</string>
+	<key>DDbracketright</key>
+	<string>DDbracketright_.glif</string>
+	<key>DDeight</key>
+	<string>DDeight_.glif</string>
+	<key>DDfive</key>
+	<string>DDfive_.glif</string>
+	<key>DDfour</key>
+	<string>DDfour_.glif</string>
+	<key>DDminus</key>
+	<string>DDminus_.glif</string>
+	<key>DDnine</key>
+	<string>DDnine_.glif</string>
+	<key>DDone</key>
+	<string>DDone_.glif</string>
+	<key>DDseven</key>
+	<string>DDseven_.glif</string>
+	<key>DDsix</key>
+	<string>DDsix_.glif</string>
+	<key>DDthree</key>
+	<string>DDthree_.glif</string>
+	<key>DDtwo</key>
+	<string>DDtwo_.glif</string>
+	<key>DDzero</key>
+	<string>DDzero_.glif</string>
+</dict>
+</plist>

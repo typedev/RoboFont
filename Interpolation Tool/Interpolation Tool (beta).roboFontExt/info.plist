@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>addToMenu</key>
+	<array>
+		<dict>
+			<key>path</key>
+			<string>InterpolationTool.py</string>
+			<key>preferredName</key>
+			<string>InterpolationTool</string>
+			<key>shortKey</key>
+			<string></string>
+		</dict>
+	</array>
+	<key>developer</key>
+	<string>Alexander Lubovenko</string>
+	<key>developerURL</key>
+	<string>https://github.com/typedev</string>
+	<key>html</key>
+	<true/>
+	<key>launchAtStartUp</key>
+	<integer>0</integer>
+	<key>mainScript</key>
+	<string></string>
+	<key>name</key>
+	<string>Interpolation Tool (beta)</string>
+	<key>requiresVersionMajor</key>
+	<string>1</string>
+	<key>requiresVersionMinor</key>
+	<string>5</string>
+	<key>timeStamp</key>
+	<real>1379397173.34376</real>
+	<key>version</key>
+	<string>0.6</string>
+	<key>repository</key>
+	<string>typedev/RoboFont</string>
+	<key>extensionPath</key>
+	<string>Interpolation Tool/Interpolation Tool (beta).roboFontExt</string>
+</dict>
+</plist>

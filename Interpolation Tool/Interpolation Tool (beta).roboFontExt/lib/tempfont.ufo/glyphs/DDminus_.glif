@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="DDminus" format="1">
+  <advance width="600.0"/>
+  <outline>
+    <contour>
+      <point x="68.0" y="374.0" type="line"/>
+      <point x="532.0" y="374.0" type="line"/>
+      <point x="532.0" y="302.0" type="line"/>
+      <point x="68.0" y="302.0" type="line"/>
+    </contour>
+  </outline>
+  <lib>
+    <dict>
+      <key>com.typemytype.robofont.layerData</key>
+      <dict>
+      </dict>
+    </dict>
+  </lib>
+</glyph>
