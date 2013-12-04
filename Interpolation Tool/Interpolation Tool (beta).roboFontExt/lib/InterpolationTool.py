@@ -20,6 +20,8 @@ from defconAppKit.controls.glyphLineView import GlyphLineView
 from mojo import events
 from mojo.drawingTools import *
 from mojo.canvas import Canvas
+import InterpolationLib #import *
+reload (InterpolationLib)
 
 
 
@@ -110,11 +112,163 @@ def decomposeGlyph(glyph):
 			c.decompose()
 	return glyph
 
-def interpolateFonts(factor, minFont, maxFont, kerning = False):
-	pass
+# def interpolateFonts(factor, minFont, maxFont, kerning = False):
+# 	pass
 	
 #===================================================================================
+
+def is_number(s):
+	print s
+	try:
+		float(s)
+		print 'NUMBER'
+		return True
+	except ValueError:
+		print 'NOT NUMBER'
+		return False
+
+		
+
+
 class InterpolationWindow(BaseWindowController):
+
+	class InstancesSelector(BaseWindowController):
+		def __init__(self, interpolationScales = [], selected = 0, operation = 'Generate', minF = None, maxF = None):
+			self.w = FloatingWindow((150, 300), minSize=(150, 150), maxSize=(150, 900))
+			# self.w.lblLabel = TextBox((10, 5, 70, 47), 'Generate selected instances:')
+			lwBorder = -120
+			self.w.InstancesList = List((5,5,-5,lwBorder), [], 
+										selectionCallback=self.selectionInstanceCallback)
+			self.w.InstancesList.setSelection([selected])
+
+			self.w.btnAction = Button((10, -32, -10, 22), operation, callback=self.btnActionCallback)
+
+
+			self.w.chkKerning = CheckBox((10, lwBorder + 5, -10, 10), "Interpolate Kerning", value=True, sizeStyle='mini', callback = self.chkKerningCallback)
+			self.w.chkDelSmallPairs = CheckBox((25, lwBorder + 20, -10, 10), "Delete small pairs", value=True, sizeStyle='mini', callback = self.chkDelSmallPairsCallback)
+
+			self.w.lbl1 = TextBox((37, lwBorder + 37, 40, 15), 'from:', sizeStyle='mini')
+			self.w.txtFrom = EditText((67, lwBorder + 35, 25, 15), '-5', sizeStyle='mini')
+			self.w.lbl2 = TextBox((98, lwBorder + 37, 40, 15), 'to:', sizeStyle='mini')
+			self.w.txtTo = EditText((115, lwBorder + 35, 25, 15), '5', sizeStyle='mini')
+
+			self.w.chkReport = CheckBox((10, lwBorder + 53, -10, 10), "Make Report (slowly)", value=True, sizeStyle='mini')
+			self.w.chkColorMark = CheckBox((10, lwBorder + 68, -10, 10), "Marks problem glyphs", value=True, sizeStyle='mini')
+
+			# self.w.chkReport = CheckBox((10, 10, -10, 10), "Report", value=True, sizeStyle='mini')			
+
+
+			self.setListInstances(interpolationScales, selected)
+			self.minFontName = minF
+			self.maxFontName = maxF
+
+			self.setUpBaseWindowBehavior()
+			self.w.center()
+			self.w.show()
+
+		def setDelSmallPairs(self, value = True):
+			if value:
+				self.w.txtFrom.enable(True)
+				self.w.lbl1.enable(True)
+				self.w.lbl2.enable(True)
+				self.w.txtTo.enable(True)
+				self.w.txtFrom.set('-5')
+				self.w.txtTo.set('5')
+			else:
+				self.w.txtFrom.enable(False)
+				self.w.lbl1.enable(False)
+				self.w.lbl2.enable(False)
+				self.w.txtTo.enable(False)
+				self.w.txtFrom.set('-5')
+				self.w.txtTo.set('5')
+		
+		def chkDelSmallPairsCallback(self, sender):
+			if self.w.chkDelSmallPairs.get():
+				self.setDelSmallPairs(True)
+			else:
+				self.setDelSmallPairs(False)
+
+		def chkKerningCallback(self, sender):
+			if self.w.chkKerning.get():
+				self.w.chkDelSmallPairs.enable(True)
+				self.w.chkDelSmallPairs.set(True)
+				self.setDelSmallPairs(True)
+			else:
+				self.w.chkDelSmallPairs.enable(False)
+				self.w.chkDelSmallPairs.set(False)
+				self.setDelSmallPairs(False)
+
+			
+
+		def InterpolateInstances(self, scale):
+			glyphlist = []
+			minFamily, minStyle = self.minFontName
+			maxFamily, maxStyle = self.maxFontName
+
+			_report = self.w.chkReport.get()
+			_kerning = self.w.chkKerning.get()
+			_deletesmallpairs = self.w.chkDelSmallPairs.get()
+			_mark = self.w.chkColorMark.get()
+
+			if is_number(self.w.txtFrom.get()):
+				_lowpair = int(self.w.txtFrom.get())
+			else:
+				_deletesmallpairs = False
+				print 'Wrong number!', _lowpair
+			if is_number(self.w.txtTo.get()):
+				_highpair = int(self.w.txtTo.get())
+			else:
+				_deletesmallpairs = False
+				print 'Wrong number!', _highpair
+
+
+			glyphlist = InterpolationLib.checkCompatibilityConsole(listfonts.getFontsByFamilyNameStyleName( minFamily, minStyle ),
+								listfonts.getFontsByFamilyNameStyleName( maxFamily, maxStyle ),
+								mark = _mark,
+								report = _report)
+
+			InterpolationLib.InterpolateFonts(listfonts.getFontsByFamilyNameStyleName( minFamily, minStyle ),
+								listfonts.getFontsByFamilyNameStyleName( maxFamily, maxStyle ),
+								compatibleGlyphs = glyphlist,
+								intrepolateScale = scale,
+								kerning = _kerning,
+								deletesmallpairs = _deletesmallpairs,
+								lowpair = _lowpair,
+								highpair = _highpair)
+
+
+		def selectionInstanceCallback(self, sender):
+			pass
+
+		def setListInstances(self, interpolationScales = [], selected = 0):
+			self.w.InstancesList.set([])
+			for i in interpolationScales:
+				ins = str(int(i*1000))
+				self.w.InstancesList.append(ins)
+			self.w.InstancesList.setSelection([selected])
+			self.w.InstancesList.scrollToSelection()
+			self.w.InstancesList.remove('0')
+			self.w.InstancesList.remove('1000')
+			
+		def getSelectedInstances(self):
+			selectedInstances = []
+			sellist = self.w.InstancesList.getSelection()
+			for i in sellist:
+				selectedInstances.append( round( float( self.w.InstancesList[i] ) /1000, 3) )
+			return selectedInstances
+
+		def windowCloseCallback(self, sender):
+			super(InstancesSelector, self).windowCloseCallback(sender)
+
+		def btnActionCallback(self, sender):
+			scale = []
+			scale = self.getSelectedInstances()
+			self.w.hide()
+			self.InterpolateInstances(scale)
+
+
+
+
 	def __init__(self, font):
 		
 		self.interpolatingSteps = 5
@@ -122,7 +276,7 @@ class InterpolationWindow(BaseWindowController):
 		self.viewMode = viewFull
 		self.resizeInProgress = False
 
-		self.w = FloatingWindow((1000, 450), minSize=(400, 150),title = 'Interpolation Tool')
+		self.w = Window((1000, 450), minSize=(400, 150),title = 'Interpolation Tool (beta 0.8.5)')
 
 		# Upper panel
 
@@ -151,9 +305,9 @@ class InterpolationWindow(BaseWindowController):
 		self.w.p1.btnAddHighExtra = Button((-380, 73, 100, 20), "+ 500 Extra", #48
 										callback=self.btnAddHighExtraCallback)
 
-		self.w.p1.btnAddStep = Button((230, 35, 60, 20), "+ step", #48
+		self.w.p1.btnAddStep = Button((300, 35, 60, 20), "+ step", #48
 										callback=self.btnAddStepCallback)
-		self.w.p1.btnDelStep = Button((300, 35, 60, 20), "- step",
+		self.w.p1.btnDelStep = Button((230, 35, 60, 20), "- step",
 										callback=self.btnDelStepCallback)
 		self.w.p1.vline2 = VerticalLine((380, 6, 1, 53))
 
@@ -226,13 +380,14 @@ class InterpolationWindow(BaseWindowController):
 		self.w.p2.btnDeleteInstance = Button((360, -40, 130, 20), "Delete Instance",
 		 								callback=self.btnDeleteInstanceCallback)
 		self.w.p2.spinner = ProgressSpinner((503, 20, 32, 32),
-                                        displayWhenStopped=False)
-		self.w.p2.btnGenerateSeleced = Button((-220, -70, -10, 20), "Generate Selected Instance...",
-		 								callback=self.btnGenerateSelectedCallback)
-		self.w.p2.btnGenerateAll = Button((-220, -40, -10, 20), "Generate All Instances...",
-		 								callback=self.btnGenerateSelectedCallback)
-		self.w.p2.btnGenerateSeleced.enable(False)
+										displayWhenStopped=False)
+		# self.w.p2.btnGenerateSeleced = Button((-220, -70, -10, 20), "Generate Selected Instance...",
+		#  								callback=self.btnGenerateSelectedCallback)
+		self.w.p2.btnGenerateAll = Button((-220, -40, -10, 20), "Generate Instances...",
+		 								callback=self.btnGenerateAllCallback)
+		# self.w.p2.btnGenerateSeleced.enable(False)
 		self.w.p2.btnGenerateAll.enable(False)
+		self.w.p2.btnDeleteInstance.enable(False)
 
 		# Init section
 
@@ -253,6 +408,7 @@ class InterpolationWindow(BaseWindowController):
 		events.addObserver(self, "drawGlyphsLine", "draw")
 
 		self.setUpBaseWindowBehavior()
+		self.w.center()
 		self.w.open()
 
 	def changeViewMode(self):
@@ -353,6 +509,8 @@ class InterpolationWindow(BaseWindowController):
 		self.w.p2.sliderFactor.enable(False)
 		self.w.p2.lblCurrent.show(True)
 		self.w.p2.lblCurrent.set(str(showFactor))
+		# self.w.p2.btnGenerateSeleced.enable(False)
+
 
 	def openSelectedGlyph(self):
 		cg = CurrentGlyph()
@@ -394,12 +552,23 @@ class InterpolationWindow(BaseWindowController):
 		self.setInterpolateScale()
 		self.drawGlyphsLine(dict(glyph=CurrentGlyph()))
 
-	def btnGenerateSelectedCallback(self,sender):
-		pass
 
+	def interpolateFonts(self, scale = []):
+		pass
+		
+
+	# def btnGenerateSelectedCallback(self,sender):
+	# 	self.interpolateFonts(selectedOnly = True)
 
 	def btnGenerateAllCallback(self,sender):
-		pass
+		Selector = self.InstancesSelector(interpolationScales = self.interpolateScale, 
+											selected = self.indexSelectedGlyph,
+											operation = "Generate",
+											minF = self.minFontName,
+											maxF = self.maxFontName)
+		# print Selector.getSelectedInstances()
+
+		# self.interpolateFonts(selectedOnly = False)
 
 	def cbSelectFontCallback(self, sender):
 		self.w.p2.spinner.start()
@@ -469,9 +638,12 @@ class InterpolationWindow(BaseWindowController):
 				self.w.p2.lblCurrent.show(True)
 				self.w.pV.btnPreviwGlyphSmall.setTitle('Preview...')
 				self.w.p2.btnPreviwGlyph.setTitle('Preview glyph...')
+				self.w.p2.btnDeleteInstance.enable(True)
+				# self.w.p2.btnGenerateSeleced.enable(True)
 			else: 
 				self.w.p2.btnPreviwGlyph.setTitle('Edit glyph...')
 				self.w.pV.btnPreviwGlyphSmall.setTitle('Edit...')
+				self.w.p2.btnDeleteInstance.enable(False)
 				self.blockSlider(factor)
 
 		self.drawGlyphsLine(dict(glyph=CurrentGlyph()))
@@ -488,12 +660,10 @@ class InterpolationWindow(BaseWindowController):
 	def drawGlyphsLine(self, info):
 		self.w.lblStatus.set('') 		
 		if (self.minFont != None) and (self.maxFont != None): 
-
+			self.w.p2.btnGenerateAll.enable(True)
 			if self.indexSelectedGlyph == None:
 				self.blockSlider()
 
-			# glyph = None
-			# if self.minFont.has_key(CurrentGlyph().name) and self.maxFont.has_key(CurrentGlyph().name):
 			glyph = CurrentGlyph()
 			glyphs = []
 
@@ -503,10 +673,6 @@ class InterpolationWindow(BaseWindowController):
 				if self.minFont.has_key(glyphName) and self.maxFont.has_key(glyphName):
 					minFamily, minStyle = self.minFontName
 					maxFamily, maxStyle = self.maxFontName
-					# tgmin = listfonts.getFontsByFamilyNameStyleName( minFamily, minStyle )[glyphName]
-					# tgmax = listfonts.getFontsByFamilyNameStyleName( maxFamily, maxStyle )[glyphName]
-					# self.minFont.insertGlyph( listfonts.getFontsByFamilyNameStyleName( minFamily, minStyle ) [glyphName] )
-					# self.maxFont.insertGlyph( listfonts.getFontsByFamilyNameStyleName( maxFamily, maxStyle ) [glyphName] )
 					self.minFont.removeGlyph(glyphName)
 					self.maxFont.removeGlyph(glyphName)
 					self.minFont.insertGlyph( listfonts.getFontsByFamilyNameStyleName( minFamily, minStyle )[glyphName], name = glyphName )

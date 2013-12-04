@@ -30,9 +30,9 @@
 	<key>requiresVersionMinor</key>
 	<string>5</string>
 	<key>timeStamp</key>
-	<real>1379397173.34376</real>
+	<real>1382679919.7877491</real>
 	<key>version</key>
-	<string>0.6</string>
+	<string>0.8.5</string>
 	<key>repository</key>
 	<string>typedev/RoboFont</string>
 	<key>extensionPath</key>
