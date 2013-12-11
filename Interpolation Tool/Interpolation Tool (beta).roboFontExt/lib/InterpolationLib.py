@@ -160,26 +160,26 @@ def InterpolateFonts(minFont,maxFont,
 			print "Dimensions:"
 
 
-			A = aFont.info.ascender
-			B = bFont.info.ascender
+			A = minFont.info.ascender
+			B = maxFont.info.ascender
 			resultFont.info.ascender = mathVM(A,B,factor)
 
 			print '\tAscender:', resultFont.info.ascender
 
-			A = aFont.info.capHeight
-			B = bFont.info.capHeight
+			A = minFont.info.capHeight
+			B = maxFont.info.capHeight
 			resultFont.info.capHeight = mathVM(A,B,factor)	
 
 			print '\tCap-height', resultFont.info.capHeight
 
-			A = aFont.info.xHeight
-			B = bFont.info.xHeight
+			A = minFont.info.xHeight
+			B = maxFont.info.xHeight
 			resultFont.info.xHeight = mathVM(A,B,factor)
 
 			print '\tx-height', resultFont.info.xHeight
 
-			A = aFont.info.descender
-			B = bFont.info.descender
+			A = minFont.info.descender
+			B = maxFont.info.descender
 			resultFont.info.descender = mathVM(A,B,factor)
 
 			print '\tDescender:', resultFont.info.descender
@@ -199,7 +199,7 @@ def InterpolateFonts(minFont,maxFont,
 
 			# Interpolate kerning 
 			if kerning:
-				resultFont.kerning.interpolate(aFont.kerning, bFont.kerning, factor )
+				resultFont.kerning.interpolate(minFont.kerning, maxFont.kerning, factor )
 				if deletesmallpairs:
 					dic = {}
 					totalPairs = len(resultFont.kerning.items())
@@ -227,7 +227,7 @@ def InterpolateFonts(minFont,maxFont,
 
 			for glyphname in compatibleGlyphs:
 				newglyph = resultFont.newGlyph( glyphname )
-				newglyph.interpolate (factor, aFont[ glyphname ], bFont[ glyphname ])
+				newglyph.interpolate (factor, minFont[ glyphname ], maxFont[ glyphname ])
 				newglyph.unicode = aFont[ glyphname ].unicode
 				newglyph.update()
 				Progress.increment()

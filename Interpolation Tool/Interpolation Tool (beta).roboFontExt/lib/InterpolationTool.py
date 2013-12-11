@@ -31,6 +31,7 @@ maxStem = 10
 intLucas = 0
 intImpallari = 1
 intLinear = 2
+intManual = 3
 
 
 viewFull = 0
@@ -55,6 +56,7 @@ DDlist = {  'DDzero' : 0, 'DDone' : 1,
 DDfontPath = sys.path[0] + '/tempfont.ufo'
 listfonts = AllFonts()
 
+ListManualStems = '48=0 74 94 128 165 192 218=1'
 
 def getListOfOpenFonts():
 	lfonts = []
@@ -105,6 +107,32 @@ def getImpallariFactor(min, max, n):
 	ls = getLucasFactor(min, max, n)
 	return [ round(l*(1-i/(n+1)) + e*(i/(n+1)),3) for (i, e, l) in zip(range(n+2), es, ls)]
 
+def getFactorByStem(minStem, maxStem, midStem):
+	if (midStem != 0) and (midStem != 1000):
+		return 1000*(midStem-minStem)/(maxStem-minStem)
+	else:
+		return midStem
+
+def getFactorListByStems(listStems): # listStems string: 10 20 30 40=0 50 60 70 80 90 100=1 110 120
+	ld = listStems.split(' ')
+	ls = []
+	lf = []
+	for i in ld:
+		if '=' in i:
+			lm = i.split('=')
+			if lm[1]=='0':
+				minStem = int(lm[0])
+				ls.append(0)
+			if lm[1]=='1':
+				maxStem = int(lm[0])
+				ls.append(1000)
+		else:
+			ls.append(int(i))
+	for i in ls:
+		lf.append(getFactorByStem(minStem, maxStem, i)/1000.0)
+	return lf
+
+
 	
 def decomposeGlyph(glyph):
 	if glyph.components != None:
@@ -121,10 +149,10 @@ def is_number(s):
 	print s
 	try:
 		float(s)
-		print 'NUMBER'
+		# print 'NUMBER'
 		return True
 	except ValueError:
-		print 'NOT NUMBER'
+		# print 'NOT NUMBER'
 		return False
 
 		
@@ -276,16 +304,19 @@ class InterpolationWindow(BaseWindowController):
 		self.viewMode = viewFull
 		self.resizeInProgress = False
 
-		self.w = Window((1000, 450), minSize=(400, 150),title = 'Interpolation Tool (beta 0.8.5)')
+		self.w = Window((1000, 450), minSize=(400, 150),title = 'Interpolation Tool (beta 0.8.6)')
 
 		# Upper panel
 
 		self.w.p1 = Group((0, 0, -0, 100))
 		self.w.p1.lblMethod = TextBox((10, 23, 70, 17), 'Method')
-		self.w.p1.radioSelectMethod = RadioGroup((70, 3, 160, 60),
-		                                 ["Luc(as) de Groot", "Pablo Impallari","Linear"],
+		self.w.p1.radioSelectMethod = RadioGroup((70, 5, 160, 55), #(70, 1, 160, 65)
+		                                 ["Luc(as) de Groot", "Pablo Impallari","Linear"],#,"Manual"],
 		                                 		sizeStyle = 'small',
 												callback=self.radioSelectMethodCallback)
+
+		# self.w.p1.txtStemsLine = 
+
 		self.w.p1.radioSelectMethod.set(0)
 		self.w.p1.vline = VerticalLine((210, 6, 1, 53))
 
@@ -656,6 +687,8 @@ class InterpolationWindow(BaseWindowController):
 			self.interpolateScale = getImpallariFactor( minStem, maxStem, self.interpolatingSteps )
 		if self.interpolateMethod == intLinear:
 			self.interpolateScale = getLinearFactor( minStem, maxStem, self.interpolatingSteps )
+		if self.interpolateMethod == intManual:
+			self.interpolateScale = getFactorListByStems(ListManualStems)
 			
 	def drawGlyphsLine(self, info):
 		self.w.lblStatus.set('') 		
