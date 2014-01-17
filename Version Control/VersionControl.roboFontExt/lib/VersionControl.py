@@ -175,9 +175,11 @@ class VersionControl:
 			cUcode = cGlyph.unicode
 
 			if (vName != cName) and ('.ver.' not in cName):
+				font.removeGlyph(cName)
 				font.insertGlyph(vGlyph,cName)
 				font[cName].unicode = cUcode
 				font[cName].update()
+				font.removeGlyph(vName)
 				font.insertGlyph(cGlyph,vName)
 				font[vName].update()
 				font.glyphOrder = font.lib['public.glyphOrder']
