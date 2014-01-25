@@ -59,7 +59,7 @@ def getListOfCompatibleGlyphs(bFont,dFont, mark = True):
 			if isComp[0]:
 				okGlyphs.append(glyph.name)
 			else:
-				a = isComp[1][0]
+				a = ' '.join(isComp[1])
 				a = a.replace('Fatal error: ','')
 				wrongGlyphs.append([glyph.name, a])
 				if mark:

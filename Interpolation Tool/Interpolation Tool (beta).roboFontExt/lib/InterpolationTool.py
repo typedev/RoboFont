@@ -741,7 +741,8 @@ class InterpolationWindow(BaseWindowController):
 						g.update()
 						glyphs.append(g)
 					else:
-						self.w.lblStatus.set(isComp[1][0])
+						# pass
+						self.w.lblStatus.set(' '.join(isComp[1]))
 
 			# self.w.lineView.setDisplayStates(previewOptions)
 			self.w.lineView.setPointSize(self.pointSize)
