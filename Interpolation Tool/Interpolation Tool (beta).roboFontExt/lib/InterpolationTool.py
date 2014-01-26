@@ -303,7 +303,7 @@ class InterpolationWindow(BaseWindowController):
 		self.viewMode = viewFull
 		self.resizeInProgress = False
 
-		self.w = Window((1000, 450), minSize = (400, 150), title = 'Interpolation Tool (beta 0.8.6a)')
+		self.w = Window((1000, 450), minSize = (400, 150), title = 'Interpolation Tool (beta 0.8.7)')
 
 		# Upper panel
 
