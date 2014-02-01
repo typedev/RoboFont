@@ -1,5 +1,5 @@
 # RoboFont Script
-# Dublicate selected glyphs and rename them to NameGlyph.XXX ( XXX - 001, 002 ... 999 ) 
+# Dublicate selected glyphs and rename them to NameGlyph.ver.XXX ( XXX - 001, 002 ... 999 )
 # Alexander Lubovenko
 # http://github.com/typedev
 
@@ -16,7 +16,7 @@ def cloneGlyph(glyph,name=''):
     else:
         oldname = name
     for i in range(1,1000):
-        newName = oldname+'.'+'%03d' % i
+        newName = '%s.ver.%03d' % (oldname, i)
         if newName not in font.keys():
             font.insertGlyph(glyph,newName)
             font.update()
