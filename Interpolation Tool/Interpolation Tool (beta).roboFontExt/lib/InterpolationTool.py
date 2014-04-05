@@ -6,7 +6,7 @@ InterpolationTool.py
 Created by Alexander Lubovenko on 2013-08-26.
 http://github.com/typedev
 """
-from __future__ import division
+#from __future__ import division
 
 import sys
 from math import *
@@ -21,8 +21,14 @@ from mojo import events
 from mojo.drawingTools import *
 from mojo.canvas import Canvas
 import InterpolationLib #import *
+#import mojo.extensions
+# from lib.settings import applicationPluginRootPath, applicationPluginPreferencesPath, appName
 
-reload(InterpolationLib)
+# print applicationPluginRootPath
+# print sys.path[0]
+# print applicationPluginPreferencesPath
+
+#reload(InterpolationLib)
 
 minStem = 1
 maxStem = 10
@@ -149,7 +155,6 @@ def decomposeGlyph (glyph):
 #===================================================================================
 
 def is_number (s):
-	print s
 	try:
 		float(s)
 		# print 'NUMBER'
@@ -303,7 +308,7 @@ class InterpolationWindow(BaseWindowController):
 		self.viewMode = viewFull
 		self.resizeInProgress = False
 
-		self.w = Window((1000, 450), minSize = (400, 150), title = 'Interpolation Tool (beta 0.8.7)')
+		self.w = Window((1000, 450), minSize = (400, 150), title = 'Interpolation Tool (beta 0.8.71)')
 
 		# Upper panel
 
@@ -693,7 +698,7 @@ class InterpolationWindow(BaseWindowController):
 
 	def drawGlyphsLine (self, info):
 		self.w.lblStatus.set('')
-		if (self.minFont != None) and (self.maxFont != None):
+		if self.minFont and self.maxFont:
 			self.w.p2.btnGenerateAll.enable(True)
 			if self.indexSelectedGlyph == None:
 				self.blockSlider()
@@ -744,7 +749,7 @@ class InterpolationWindow(BaseWindowController):
 						# pass
 						self.w.lblStatus.set(' '.join(isComp[1]))
 
-			# self.w.lineView.setDisplayStates(previewOptions)
+					#			self.w.lineView.setDisplayStates(previewOptions)
 			self.w.lineView.setPointSize(self.pointSize)
 			self.w.lineView.set(glyphs)
 
