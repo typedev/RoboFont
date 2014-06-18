@@ -56,7 +56,7 @@ class PolygonSelectionTool(EditingTool):
         return "Polygon Selection Tool"
 
     def getToolbarIcon(self):
-        icon = NSImage.alloc().initWithContentsOfFile_("polygon-select.png")
+        icon = NSImage.alloc().initWithContentsOfFile_("polygon-select.pdf")
         if icon :
             return icon 
         
