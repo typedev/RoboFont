@@ -1,3 +1,4 @@
+# Make AALT feature
 from robofab.world import CurrentFont
 
 font = CurrentFont()
@@ -20,9 +21,9 @@ for glyph in font:
 		a = glyph.name.split('.')
 		gname = a[0]
 		if gname not in aaltdic:
-			aaltdic[gname] = [ '%s.' % gname + '.'.join(a[1:])]
+			aaltdic[gname] = ['%s.' % gname + '.'.join(a[1:])]
 		else:
-			aaltdic[gname].append( '%s.' % gname + '.'.join(a[1:]))
+			aaltdic[gname].append('%s.' % gname + '.'.join(a[1:]))
 
 print 'feature aalt {'
 for name, alts in sorted(aaltdic.items()):
