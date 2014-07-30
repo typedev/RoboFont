@@ -7,6 +7,9 @@ from robofab.world import CurrentFont, CurrentGlyph
 font = CurrentFont()
 gselected = CurrentGlyph()
 
+TOFL_MARK = (0.4, 1.0, 0.4, 1.0)
+EXPORTED = (0.4, 1.0, 0.4, 0.1)
+
 file_ext = 'toFl'
 path_exp = font.path.replace('.ufo','')
 # filename = font.filename
@@ -22,11 +25,3 @@ print 'Glyph list saved as: ' + path_exp + '.' + file_ext
 report.save()
 
 
-# report = Report(path = font.path.replace('.ufo','.txt'), process = 'Export Glyph to FL' )
-
-
-
-# namesstr = ''
-# for n in names:
-# 	namesstr = namesstr + n +' '
-# print namesstr

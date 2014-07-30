@@ -1,5 +1,6 @@
 # RoboFont Script
-# Dublicate selected glyphs and rename them to NameGlyph.ver.XXX ( XXX - 001, 002 ... 999 )
+# Dublicate selected glyphs and rename them to NameGlyph.ver.
+# XXX ( XXX - 001, 002 ... 999 )
 # Alexander Lubovenko
 # http://github.com/typedev
 
