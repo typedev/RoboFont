@@ -9,6 +9,7 @@ gselected = CurrentGlyph()
 
 TOFL_MARK = (0.4, 1.0, 0.4, 1.0)
 EXPORTED = (0.4, 1.0, 0.4, 0.1)
+EXCEPT_MARK = (1.0, 0.8, 0.4, 1.0)
 
 file_ext = 'toFl'
 path_exp = font.path.replace('.ufo','')

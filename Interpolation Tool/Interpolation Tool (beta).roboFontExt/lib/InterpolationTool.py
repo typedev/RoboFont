@@ -308,7 +308,7 @@ class InterpolationWindow(BaseWindowController):
 		self.viewMode = viewFull
 		self.resizeInProgress = False
 
-		self.w = Window((1000, 450), minSize = (400, 150), title = 'Interpolation Tool (beta 0.8.71)')
+		self.w = Window((1000, 450), minSize = (400, 150), title = 'Interpolation Tool (beta 0.8.72)')
 
 		# Upper panel
 
@@ -354,8 +354,7 @@ class InterpolationWindow(BaseWindowController):
 		                                bordered = True,
 		                                hasVerticalScroller = True,
 		                                # displayOptions = dict(previewOptions),
-		                                selectionCallback = self.lineViewSelectionCallback,
-		                                doubleClickCallbak = self.lineViewDoubleSelectionCallback)
+		                                selectionCallback = self.lineViewSelectionCallback)
 
 		self.w.lblStatus = TextBox((15, -105, -20, 17), 'Status bar')
 		self.w.lineView.setFont(font)
@@ -623,8 +622,8 @@ class InterpolationWindow(BaseWindowController):
 			self.drawGlyphsLine(dict(glyph = CurrentGlyph()))
 		self.w.p2.spinner.stop()
 
-	def lineViewDoubleSelectionCallback (self, sender):
-		self.openSelectedGlyph()
+	# def lineViewDoubleSelectionCallback (self, sender):
+	# 	self.openSelectedGlyph()
 
 	def lineViewSelectionCallback (self, sender):
 		lineGlyphs = self.w.lineView.get()
@@ -720,6 +719,13 @@ class InterpolationWindow(BaseWindowController):
 					                         name = glyphName)
 				sg = decomposeGlyph(self.minFont[glyphName])
 				dg = decomposeGlyph(self.maxFont[glyphName])
+
+				###
+				# sg.leftMargin = 50
+				# sg.rightMargin = 50
+				# dg.leftMargin = 50
+				# sg.rightMargin = 50
+				###
 
 				for i in self.interpolateScale:
 					gname = str(int(i * 1000))

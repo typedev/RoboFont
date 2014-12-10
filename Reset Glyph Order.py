@@ -1,3 +1,0 @@
-font = CurrentFont()
-
-font.glyphOrder = []
